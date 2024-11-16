@@ -2,11 +2,11 @@ package io.microservices.thoughts.controller;
 
 import io.microservices.thoughts.constants.SortField;
 import io.microservices.thoughts.constants.ThoughtsCRUDConstants;
-import io.microservices.thoughts.customExceptions.ThoughtNotFoundException;
-import io.microservices.thoughts.kafkaEventsModel.ThoughtEvent;
-import io.microservices.thoughts.models.ApiResponse;
+import io.microservices.thoughts.dto.ApiResponse;
+import io.microservices.thoughts.dto.ThoughtResponse;
+import io.microservices.thoughts.dto.kafkaEventsModel.ThoughtEvent;
+import io.microservices.thoughts.exception.ThoughtNotFoundException;
 import io.microservices.thoughts.models.Thought;
-import io.microservices.thoughts.models.ThoughtResponse;
 import io.microservices.thoughts.services.ThoughtServiceImpl;
 
 import org.slf4j.Logger;

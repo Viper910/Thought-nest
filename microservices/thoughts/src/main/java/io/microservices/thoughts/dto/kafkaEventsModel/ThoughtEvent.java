@@ -1,4 +1,4 @@
-package io.microservices.thoughts.kafkaEventsModel;
+package io.microservices.thoughts.dto.kafkaEventsModel;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

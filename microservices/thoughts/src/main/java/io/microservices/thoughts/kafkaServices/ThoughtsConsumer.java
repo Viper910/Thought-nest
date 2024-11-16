@@ -17,7 +17,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 
 import io.microservices.thoughts.constants.ThoughtsCRUDConstants;
-import io.microservices.thoughts.kafkaEventsModel.ThoughtEvent;
+import io.microservices.thoughts.dto.kafkaEventsModel.ThoughtEvent;
 import io.microservices.thoughts.models.Thought;
 import io.microservices.thoughts.repositories.ThoughtsRepository;
 import jakarta.annotation.PreDestroy;

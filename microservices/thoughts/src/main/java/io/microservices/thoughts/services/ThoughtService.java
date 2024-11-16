@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 
 import io.microservices.thoughts.constants.ThoughtsCRUDConstants;
-import io.microservices.thoughts.kafkaEventsModel.ThoughtEvent;
+import io.microservices.thoughts.dto.ThoughtResponse;
+import io.microservices.thoughts.dto.kafkaEventsModel.ThoughtEvent;
 import io.microservices.thoughts.models.Thought;
-import io.microservices.thoughts.models.ThoughtResponse;
 
 public interface ThoughtService {
     ThoughtResponse sendThoughtEventToTopic(ThoughtEvent thought, ThoughtsCRUDConstants eventType);

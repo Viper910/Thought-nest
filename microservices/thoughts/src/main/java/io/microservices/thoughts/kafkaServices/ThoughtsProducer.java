@@ -3,7 +3,8 @@ package io.microservices.thoughts.kafkaServices;
 
 import io.microservices.thoughts.constants.ThoughtEventKafkaHeaders;
 import io.microservices.thoughts.constants.ThoughtsCRUDConstants;
-import io.microservices.thoughts.kafkaEventsModel.ThoughtEvent;
+import io.microservices.thoughts.dto.kafkaEventsModel.ThoughtEvent;
+
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.Message;

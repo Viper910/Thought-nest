@@ -1,4 +1,4 @@
-package io.microservices.thoughts.customExceptions;
+package io.microservices.thoughts.exception;
 
 /**
  * Custom exception thrown when a requested Thought is not found in the system.

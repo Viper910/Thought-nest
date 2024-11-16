@@ -1,4 +1,4 @@
-package io.microservices.thoughts.models;
+package io.microservices.thoughts.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
