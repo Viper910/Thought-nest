@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: thoughts-microservices
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic:
+      thoughtTopicName: THOUGHT_INCOMING_REQUESTS
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      
+    consumer:
+      group-id: THOUGHT_CONSUMER_1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      max-poll-records: 100 
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: io.microservices.thoughts.kafkaEventsModel
+  docker:
+    compose:
+      enabled: true
+      file: C:\\Workspace\\thoughtnest\\microservices\\thoughts\\compose.yaml
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/thoughts-nest
+      auto-index-creation: true
+
+server:
+  port: 3000
