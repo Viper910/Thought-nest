@@ -22,3 +22,29 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Ignore IntelliJ IDEA files
+.idea/
+*.iml
+
+# Ignore Eclipse files
+.project
+.classpath
+.settings/
+
+# Ignore NetBeans files
+nbproject/
+
+# Ignore all build artifacts
+build/
+target/
+
+# Ignore logs and temporary files
+*.log
+*.pid
+*.swp
+
+# Ignore Spring Boot specific files
+*.jar
+*.war
+*.ear
