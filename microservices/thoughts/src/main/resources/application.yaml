@@ -20,14 +20,19 @@ spring:
         spring:
           json:
             trusted:
-              packages: io.microservices.thoughts.kafkaEventsModel
+              packages: io.microservices.thoughts.dto.kafkaEventsModel
   docker:
     compose:
       enabled: true
-      file: C:\\Workspace\\thoughtnest\\microservices\\thoughts\\compose.yaml
+      file: C:\\Workspace\\Thought-nest\\microservices\\thoughts\\compose.yaml
   data:
     mongodb:
-      uri: mongodb://localhost:27017/thoughts-nest
+      host: localhost
+      port: 27018
+      database: thoughts-nest
+      username: root
+      password: secre
+      authentication-database: admin
       auto-index-creation: true
 
 server:

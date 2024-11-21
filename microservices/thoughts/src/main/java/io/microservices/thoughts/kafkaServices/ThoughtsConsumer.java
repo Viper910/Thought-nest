@@ -51,7 +51,6 @@ public class ThoughtsConsumer {
     @KafkaListener(topics = "THOUGHT_INCOMING_REQUESTS", groupId = "THOUGHT_CONSUMER_1")
     public void thoughtsProcessor(Message<ThoughtEvent> message, @Header("eventType") ThoughtsCRUDConstants eventType) {
         ThoughtEvent event = message.getPayload();
-
         switch (eventType) {
             case CREATE -> addToCreateBatch(event);
             case UPDATE -> addToUpdateBatch(event);
@@ -127,28 +126,37 @@ public class ThoughtsConsumer {
 
     private void batchCreation(List<Thought> batch){
         try {
-            thoughtsRepository.saveAll(batch);
-            LOGGER.debug("Batch of size {} got created and stored in DB.",batch.size());
+            if(!batch.isEmpty()){
+                thoughtsRepository.saveAll(batch);
+                LOGGER.debug("Batch of size {} got created and stored in DB.",batch.size());
+            }
         } catch (Exception e) {
-            LOGGER.error("Batch of size {} was unable created and stored in DB.",batch.size());
+            createBatch.addAll(batch);
+            LOGGER.error("Batch of size {} was unable to create and stored in DB. ERROR:{}",batch.size(),e.getMessage());
         }
     }
 
     private void batchUpdation(List<Thought> batch){
         try {
-            thoughtsRepository.saveAll(batch);
-            LOGGER.debug("Batch of size {} got updated and stored in DB.",batch.size());
+            if(!batch.isEmpty()){
+                thoughtsRepository.saveAll(batch);
+                LOGGER.debug("Batch of size {} got updated and stored in DB.",batch.size());
+            }
         } catch (Exception e) {
-            LOGGER.error("Batch of size {} was unable to update and stored in DB.",batch.size());
+            updateBatch.addAll(batch);
+            LOGGER.error("Batch of size {} was unable to update and stored in DB. ERROR:{}",batch.size(),e.getMessage());
         }
     }
 
     private void batchDeletion(List<String> batch){
         try {
-            thoughtsRepository.deleteAllById(batch);
-            LOGGER.debug("Batch of size {} got deleted.",batch.size());
+            if(!batch.isEmpty()){
+                thoughtsRepository.deleteAllById(batch);
+                LOGGER.debug("Batch of size {} got deleted.",batch.size());
+            }
         } catch (Exception e) {
-            LOGGER.error("Batch of size {} was unable to deleted",batch.size());
+            deleteBatch.addAll(batch);
+            LOGGER.error("Batch of size {} was unable to deleted. ERROR:{}",batch.size(),e.getMessage());
         }
     }
 
