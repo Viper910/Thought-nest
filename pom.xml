@@ -20,5 +20,6 @@
     <modules>
         <module>./microservices/thoughts</module>
         <module>./microservices/socialfeedbackservice</module>
+        <module>./microservices/authentication</module>
     </modules>
 </project>
