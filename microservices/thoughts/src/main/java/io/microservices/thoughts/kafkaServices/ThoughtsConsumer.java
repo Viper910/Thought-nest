@@ -25,12 +25,13 @@ import jakarta.annotation.PreDestroy;
 @Service
 public class ThoughtsConsumer {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(ThoughtsConsumer.class);
+
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final ReentrantLock lock = new ReentrantLock();
     private final List<Thought> createBatch = Collections.synchronizedList(new ArrayList<>());
     private final List<Thought> updateBatch = Collections.synchronizedList(new ArrayList<>());
     private final List<String> deleteBatch = Collections.synchronizedList(new ArrayList<>());
-    private final Logger LOGGER = LoggerFactory.getLogger(ThoughtsConsumer.class);
 
     private long lastCreateBatchTime = System.currentTimeMillis();
     private long lastUpdateBatchTime = System.currentTimeMillis();
@@ -92,17 +93,14 @@ public class ThoughtsConsumer {
 
             if (createBatch.size() >= MINIMUM_BATCH_SIZE || (currentTime - lastCreateBatchTime) >= TimeUnit.SECONDS.toMillis(TIME_THRESHOLD_SECONDS)) {
                 batchCreation(new ArrayList<>(createBatch));
-                createBatch.clear();
                 lastCreateBatchTime = currentTime;
             }
             if (updateBatch.size() >= MINIMUM_BATCH_SIZE || (currentTime - lastUpdateBatchTime) >= TimeUnit.SECONDS.toMillis(TIME_THRESHOLD_SECONDS)) {
                 batchUpdation(new ArrayList<>(updateBatch));
-                updateBatch.clear();
                 lastUpdateBatchTime = currentTime;
             }
             if (deleteBatch.size() >= MINIMUM_BATCH_SIZE || (currentTime - lastDeleteBatchTime) >= TimeUnit.SECONDS.toMillis(TIME_THRESHOLD_SECONDS)) {
                 batchDeletion(new ArrayList<>(deleteBatch));
-                deleteBatch.clear();
                 lastDeleteBatchTime = currentTime;
             }
         } finally {
@@ -127,6 +125,7 @@ public class ThoughtsConsumer {
     private void batchCreation(List<Thought> batch){
         try {
             if(!batch.isEmpty()){
+                createBatch.clear();
                 thoughtsRepository.saveAll(batch);
                 LOGGER.debug("Batch of size {} got created and stored in DB.",batch.size());
             }
@@ -139,6 +138,7 @@ public class ThoughtsConsumer {
     private void batchUpdation(List<Thought> batch){
         try {
             if(!batch.isEmpty()){
+                updateBatch.clear();
                 thoughtsRepository.saveAll(batch);
                 LOGGER.debug("Batch of size {} got updated and stored in DB.",batch.size());
             }
@@ -151,6 +151,7 @@ public class ThoughtsConsumer {
     private void batchDeletion(List<String> batch){
         try {
             if(!batch.isEmpty()){
+                deleteBatch.clear();
                 thoughtsRepository.deleteAllById(batch);
                 LOGGER.debug("Batch of size {} got deleted.",batch.size());
             }
