@@ -16,9 +16,10 @@ import io.microservices.authentication.exceptions.UserEmailAlreadyExistException
 import io.microservices.authentication.exceptions.UserNotFoundException;
 import io.microservices.authentication.model.User;
 import io.microservices.authentication.repository.UserRepository;
+import io.microservices.authentication.serviceTemplates.AuthenticationServiceTemplate;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationService implements AuthenticationServiceTemplate {
 
     @Autowired
     private JwtService jwtService;
@@ -29,6 +30,7 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Override
     public User saveUser(UserCreationRequest userCreationRequest) {
         if (userEmailExist(userCreationRequest.getEmail()) != null) {
             throw new UserEmailAlreadyExistException();
@@ -40,6 +42,7 @@ public class AuthenticationService {
         return user;
     }
 
+    @Override
     public String loginUser(UserLoginRequest userLoginRequest) {
         if (userLoginRequest.getUsername() == null && userLoginRequest.getEmail() == null) {
             throw new UserNotFoundException("Please provide either username or email.");
@@ -91,6 +94,7 @@ public class AuthenticationService {
         return null;
     }
 
+    @Override
     public User updateUser(String id, UserCreationRequest userCreationRequest) {
         // Optional<User> user = userRepository.findById(id);
         // if(user.isPresent()){
@@ -100,6 +104,7 @@ public class AuthenticationService {
         return null;
     }
 
+    @Override
     public String deleteUser(String id) {
         if (id == null) {
             throw new UserNotFoundException("Please provide a correct id.");

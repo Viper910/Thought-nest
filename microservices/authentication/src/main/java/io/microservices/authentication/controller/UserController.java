@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -36,9 +37,10 @@ public class UserController {
     public ResponseEntity<ApiResponse<String>> logIn(@RequestBody UserLoginRequest userData) {
         try {
             String token = authenticationService.loginUser(userData);
-            return ResponseEntity.ok(ApiResponse.success(token, "Successfull logged in to user.")); 
+            return ResponseEntity.ok(ApiResponse.success(token, "Successfull logged in to user."));
         } catch (Exception e) {
-            return ResponseEntity.status(401).body(ApiResponse.error("Unable to logged in.", Collections.singletonList(e.getMessage())));
+            return ResponseEntity.status(401)
+                    .body(ApiResponse.error("Unable to logged in.", Collections.singletonList(e.getMessage())));
         }
     }
 
@@ -47,9 +49,10 @@ public class UserController {
         User user = null;
         try {
             user = authenticationService.saveUser(userData);
-            return ResponseEntity.ok(ApiResponse.success(user, "Successfull created an user."));            
+            return ResponseEntity.ok(ApiResponse.success(user, "Successfull created an user."));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(ApiResponse.error("Unable to create an user.", Collections.singletonList(e.getMessage())));            
+            return ResponseEntity.status(500)
+                    .body(ApiResponse.error("Unable to create an user.", Collections.singletonList(e.getMessage())));
         }
     }
 
@@ -57,9 +60,23 @@ public class UserController {
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable String id) {
         try {
             String message = authenticationService.deleteUser(id);
-            return ResponseEntity.ok(ApiResponse.success(message, "User deleted."));            
+            return ResponseEntity.ok(ApiResponse.success(message, "User deleted."));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(ApiResponse.error("Unable to delete user.", Collections.singletonList(e.getMessage())));            
+            return ResponseEntity.status(500)
+                    .body(ApiResponse.error("Unable to delete user.", Collections.singletonList(e.getMessage())));
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ApiResponse<User>> update(@PathVariable String id,
+            @RequestBody UserCreationRequest userData) {
+        User user = null;
+        try {
+            user = authenticationService.updateUser(id, userData);
+            return ResponseEntity.ok(ApiResponse.success(user, "Successfull update the user."));
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(ApiResponse.error("Unable to update the user.", Collections.singletonList(e.getMessage())));
         }
     }
 
