@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.microservices.authentication.dto.request.UserCreationRequest;
 import io.microservices.authentication.dto.request.UserLoginRequest;
 import io.microservices.authentication.dto.response.ApiResponse;
+import io.microservices.authentication.exceptions.UserNotFoundException;
 import io.microservices.authentication.model.User;
 import io.microservices.authentication.services.AuthenticationService;
 
@@ -38,8 +39,11 @@ public class UserController {
         try {
             String token = authenticationService.loginUser(userData);
             return ResponseEntity.ok(ApiResponse.success(token, "Successfull logged in to user."));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.error("Unable to logged in.", Collections.singletonList(e.getMessage())));
         } catch (Exception e) {
-            return ResponseEntity.status(401)
+            return ResponseEntity.status(500)
                     .body(ApiResponse.error("Unable to logged in.", Collections.singletonList(e.getMessage())));
         }
     }
@@ -61,6 +65,9 @@ public class UserController {
         try {
             String message = authenticationService.deleteUser(id);
             return ResponseEntity.ok(ApiResponse.success(message, "User deleted."));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.error("Unable to delete user.", Collections.singletonList(e.getMessage())));
         } catch (Exception e) {
             return ResponseEntity.status(500)
                     .body(ApiResponse.error("Unable to delete user.", Collections.singletonList(e.getMessage())));
@@ -74,9 +81,12 @@ public class UserController {
         try {
             user = authenticationService.updateUser(id, userData);
             return ResponseEntity.ok(ApiResponse.success(user, "Successfull update the user."));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.error("Unable to update user.", Collections.singletonList(e.getMessage())));
         } catch (Exception e) {
             return ResponseEntity.status(500)
-                    .body(ApiResponse.error("Unable to update the user.", Collections.singletonList(e.getMessage())));
+                    .body(ApiResponse.error("Unable to update  user.", Collections.singletonList(e.getMessage())));
         }
     }
 

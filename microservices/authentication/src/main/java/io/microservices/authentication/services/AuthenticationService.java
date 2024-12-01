@@ -96,12 +96,18 @@ public class AuthenticationService implements AuthenticationServiceTemplate {
 
     @Override
     public User updateUser(String id, UserCreationRequest userCreationRequest) {
-        // Optional<User> user = userRepository.findById(id);
-        // if(user.isPresent()){
-        // user.setPassword(passwordEncoder.encode(userCreationRequest.getPassword()));
-        // }
-        // Todo: Updating the user
-        return null;
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) {
+            throw new UserNotFoundException("User with id " + id + " does not exist.");
+        } else {
+            User updatedUser = user.get();
+            updatedUser.updatedUser(userCreationRequest);
+            if (userCreationRequest.getPassword() != null) {
+                updatedUser.setPassword(passwordEncoder.encode(userCreationRequest.getPassword()));
+                userRepository.save(updatedUser);
+            }
+            return updatedUser;
+        }
     }
 
     @Override
