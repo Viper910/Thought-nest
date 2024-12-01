@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: authentication
+  data:
+    mongodb:
+      uri: mongodb://root:secret@localhost:27018/thoughts-nest?authSource=admin
+  docker:
+    compose:
+      enabled: true
+      file: C:\\Workspace\\Thought-nest\\microservices\\thoughts\\compose.yaml
+
+auth:
+  secret: somethinghjbjbjbjbjbkbjkbkjbjbjkbbkjbbkjbjbjkbkjbjkbkbjbkjbjbkbbbbjbkjbjbkjbkb
