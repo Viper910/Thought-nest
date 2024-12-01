@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import io.microservices.authentication.constants.Role;
 import io.microservices.authentication.dto.request.UserCreationRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
