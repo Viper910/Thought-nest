@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: socialfeedbackservice
+  data:
+    mongodb:
+      uri: mongodb://root:secret@localhost:27018/thought-nest
+
+server:
+  port: 3003

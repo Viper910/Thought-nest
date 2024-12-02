@@ -11,3 +11,7 @@ spring:
 
 auth:
   secret: somethinghjbjbjbjbjbkbjkbkjbjbjkbbkjbbkjbjbjkbkjbjkbkbjbkjbjbkbbbbjbkjbjbkjbkb
+
+
+server:
+  port: 3001
