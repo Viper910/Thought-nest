@@ -18,8 +18,10 @@
     </properties>
 
     <modules>
+        <module>./microservices/thoughtnest-registry</module>
+        <module>./microservices/thoughtnest-gateway</module>
+        <module>./microservices/authentication</module>
         <module>./microservices/thoughts</module>
         <module>./microservices/socialfeedbackservice</module>
-        <module>./microservices/authentication</module>
     </modules>
 </project>
