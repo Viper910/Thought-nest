@@ -1,4 +1,22 @@
 spring:
+  cloud:
+   gateway:
+    routes:
+      - id: authentication
+        uri: lb://AUTHENTICATION
+        predicates:
+          - Path=/auth/**,/user/**
+
+      - id: thoughts-microservices
+        uri: lb://THOUGHTS-MICROSERVICES
+        predicates:
+          - Path=/thought/**
+
+      - id: socialfeedbackservice
+        uri: lb://SOCIALFEEDBACKSERVICE
+        predicates:
+          - Path=/socialfeedback/**
+       
   application:
     name: Thoughtnest-Gateway
 

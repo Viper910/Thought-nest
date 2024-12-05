@@ -45,7 +45,7 @@ public class ThoughtsConsumer {
 
     public ThoughtsConsumer() {
         // Schedule the batch processing task to run every 4 seconds
-        LOGGER.info("Sheduler for thought consumer has been started each batch will be update in {}s and minimum batch size:{}",TIME_THRESHOLD_SECONDS,MINIMUM_BATCH_SIZE);
+        LOGGER.trace("Sheduler for thought consumer has been started each batch will be update in {}s and minimum batch size:{}",TIME_THRESHOLD_SECONDS,MINIMUM_BATCH_SIZE);
         scheduler.scheduleAtFixedRate(this::processBatches, 0, 4, TimeUnit.SECONDS);
     }
 
